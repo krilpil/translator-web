@@ -1,0 +1,22 @@
+# Отключаем MultiViews, чтобы Apache не искал совпадения по частям имени
+Options -MultiViews
+
+RewriteEngine On
+
+# Если запрошенный файл или папка существуют — отдать их напрямую
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Иначе перенаправить на index.html
+RewriteRule ^ index.html [QSA,L]
+
+# Запрет на кэширование файла index.html
+<IfModule mod_headers.c>
+    <FilesMatch "^index\.html$">
+        # Всегда просить свежую версию
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
