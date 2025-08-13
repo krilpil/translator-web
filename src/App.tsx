@@ -17,10 +17,13 @@ import './App.css';
 import AboutPage from './pages/AboutPage';
 import TranslatePanel from './UI/TranslatePanel';
 import { useUtilsStore } from './services/store/utilsStore';
+import { OnboardPage } from '@/pages/OnboardPage';
+import { useOnboardStore } from '@/entities/onboard';
 
 function AppWrapper() {
     const location = useLocation();
     const { sidebarOpen } = useUtilsStore();
+    const { store } = useOnboardStore();
     const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 768);
 
     const isHomePage = location.pathname === '/';
@@ -75,6 +78,8 @@ function AppWrapper() {
 
     const shouldApplyPadding = !isHomePage || (isHomePage && isNarrowScreen);
 
+    if (!store.isPassed) return <OnboardPage />;
+
     return (
         <>
             {!hideHeader && (isHomePage ? <Header /> : <MainHeader />)}
@@ -85,7 +90,7 @@ function AppWrapper() {
                 className={`mx-auto mt-20 mb-30 transition-all duration-300 ${shouldApplyPadding ? 'p-5' : ''}`}
                 style={{
                     maxWidth: '930px',
-                    transform: showToolbar && sidebarOpen ? 'translateX(-10rem)' : 'translateX(0)',
+                    transform: showToolbar && sidebarOpen ? 'translateX(-10rem)' : 'translateX(0)'
                 }}
             >
                 <Routes>

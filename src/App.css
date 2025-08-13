@@ -13,17 +13,44 @@
 
 @font-face {
     font-family: 'Soyuz Grotesk';
-    src:
-        url('/fonts/Soyuz_Grotesk_Bold.otf') format('opentype'),
-        url('/fonts/SoyuzGroteskBold.ttf') format('truetype');
+    src: url('/fonts/Soyuz_Grotesk_Bold.otf') format('opentype'),
+    url('/fonts/SoyuzGroteskBold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Arimo';
-    src: url('/fonts/HelveticaNeueLight.otf') format('truetype');
+    font-family: 'Helvetica';
+    src: url('/fonts/HelveticaNeue-Thin.otf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/fonts/HelveticaNeue-Light.otf') format('truetype');
     font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/fonts/HelveticaNeue-Roman.otf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/fonts/HelveticaNeue-Medium.otf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/fonts/HelveticaNeue-Bold.otf') format('truetype');
+    font-weight: 700;
     font-style: normal;
 }
 
@@ -80,6 +107,7 @@ h3 {
     :root {
         color: #fff;
     }
+
     a:hover {
         color: #747bff;
     }

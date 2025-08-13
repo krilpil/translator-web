@@ -1,17 +1,18 @@
 import baseApi from '../baseApi';
 
 type IMakeTransation = {
-    languageId: number;
+    srcLanguageId: number,
+    dstLanguageId: number,
     text: string;
 };
 
 export const defaultApi = async () => {
-    const response = await baseApi.get('/languages');
+    const response = await baseApi.get('/api/languages');
     return response.data;
 };
 
 export const makeTransation = async (params: IMakeTransation) => {
-    const response = await baseApi.post('/translate', params);
+    const response = await baseApi.post('/api/translate', params);
 
     return response.data;
 };

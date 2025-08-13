@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useHistoryStore } from '../services/store/useHistoryStore';
 import { useUtilsStore } from '../services/store/utilsStore';
 import { debounce } from 'lodash';
@@ -16,41 +16,45 @@ export default function CustomTextArea() {
 
     const [isMobile] = useState(window.innerWidth < 768);
 
-    const debouncedTranslate = useCallback(
-        debounce((text: string) => {
-            setIsLiked(false);
-            setIsLoading(true);
-            setTranslated('');
+    const debouncedTranslate = useMemo(() =>
+            debounce((text: string) => {
+                setIsLiked(false);
+                setIsLoading(true);
+                setTranslated('');
 
-            setTimeout(async () => {
-                try {
-                    const response = await makeTransation({ languageId: rightLanguage.id, text });
-                    const translatedText = response.translatedText;
+                setTimeout(async () => {
+                    try {
+                        const response = await makeTransation({
+                            srcLanguageId: 1,
+                            dstLanguageId: 2,
+                            text
+                        });
+                        const translatedText = response.translatedText;
 
-                    setTranslated(translatedText);
+                        setTranslated(translatedText);
 
-                    addToHistory({
-                        leftLanguage: leftLanguage,
-                        rightLanguage: rightLanguage.name,
-                        leftTranslate: text,
-                        rightTranslate: translatedText,
-                        isLiked: false,
-                    });
-                } catch (error) {
-                    console.error('Ошибка перевода:', error);
-                } finally {
-                    setIsLoading(false);
-                }
-            }, 1500);
-        }, 500),
-        [rightLanguage.id, leftLanguage, rightLanguage.name],
+                        addToHistory({
+                            leftLanguage: leftLanguage,
+                            rightLanguage: rightLanguage.name,
+                            leftTranslate: text,
+                            rightTranslate: translatedText,
+                            isLiked: false
+                        });
+                    } catch (error) {
+                        console.error('Ошибка перевода:', error);
+                    } finally {
+                        setIsLoading(false);
+                    }
+                }, 1500);
+            }, 500),
+        [rightLanguage.id, leftLanguage, rightLanguage.name]
     );
 
     const likeTranslate = () => {
         saveTransation({
             languageId: rightLanguage.id,
             srcText: wordToTranslate,
-            translationText: translated,
+            translationText: translated
         });
         setIsLiked(true);
     };
@@ -129,7 +133,8 @@ export default function CustomTextArea() {
     return (
         <div className="flex min-h-[351px] flex-col gap-4 rounded-3xl pt-4 pb-4 backdrop-blur-md">
             {copied && (
-                <div className="absolute top-2 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-green-600 px-4 py-2 text-white shadow-lg transition-opacity duration-300">
+                <div
+                    className="absolute top-2 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-green-600 px-4 py-2 text-white shadow-lg transition-opacity duration-300">
                     Скопировано!
                 </div>
             )}
@@ -137,12 +142,16 @@ export default function CustomTextArea() {
             <div className="flex flex-col gap-4 md:flex-row" style={isMobile ? { marginTop: '-60px' } : {}}>
                 <div className="relative flex-1" style={isMobile ? { margin: '20px' } : {}}>
                     {/* <div className="absolute top-4 right-4 left-0 flex items-center justify-between"> */}
-                    <div className="absolute top-4 left-0 flex items-center justify-between" style={{ right: isMobile ? '0' : '1rem' }}>
+                    <div className="absolute top-4 left-0 flex items-center justify-between"
+                         style={{ right: isMobile ? '0' : '1rem' }}>
                         <div className="flex">
                             <img src="/images/somexz.png" className="mt-1 w-[24px]" alt="" />
-                            <div className="mt-2.5 font-['Helvetica'] text-base leading-3 font-light text-white">{leftLanguage}</div>
-                        </div>{' '}
-                        <img onClick={handleClear} className="w-6 cursor-pointer" src="/images/miniUI/del.png" alt="Очистить" />
+                            <div
+                                className="mt-2.5 font-['Helvetica'] text-base leading-3 font-light text-white">{leftLanguage}</div>
+                        </div>
+                        {' '}
+                        <img onClick={handleClear} className="w-6 cursor-pointer" src="/images/miniUI/del.png"
+                             alt="Очистить" />
                     </div>
 
                     <textarea
@@ -153,26 +162,32 @@ export default function CustomTextArea() {
                     />
                 </div>
 
-                <div className="relative max-h-[350px] min-h-[350px] flex-1 overflow-y-auto rounded-[39px] border-1 bg-black p-4 text-xl break-words text-white">
+                <div
+                    className="relative max-h-[350px] min-h-[350px] flex-1 overflow-y-auto rounded-[39px] border-1 bg-black p-4 text-xl break-words text-white">
                     <div className="absolute top-5 right-5 left-4 flex items-center justify-between">
                         <div className="flex">
                             <img src="/images/somexz.png" className="w-[24px]" alt="" />
-                            <div className="mt-1.5 font-['Helvetica'] text-base leading-3 font-light text-white">{rightLanguage.name}</div>
+                            <div
+                                className="mt-1.5 font-['Helvetica'] text-base leading-3 font-light text-white">{rightLanguage.name}</div>
                         </div>
 
                         <div className="flex gap-3">
-                            <img onClick={handleCopy} className="w-[22px] cursor-pointer" src="/images/miniUI/Copy.svg" alt="Копировать" />
+                            <img onClick={handleCopy} className="w-[22px] cursor-pointer" src="/images/miniUI/Copy.svg"
+                                 alt="Копировать" />
                             {!isLiked ? (
-                                <img onClick={likeTranslate} className="w-[22px] cursor-pointer" src="/images/miniUI/Like.svg" alt="Лайк" />
+                                <img onClick={likeTranslate} className="w-[22px] cursor-pointer"
+                                     src="/images/miniUI/Like.svg" alt="Лайк" />
                             ) : (
                                 <img src="/images/Save.svg" className="w-[22px]" alt="Сохранено" />
                             )}
-                            <img onClick={handleSpeak} className="w-[22px] cursor-pointer" src="/images/miniUI/Sound.svg" alt="Озвучить" />
+                            <img onClick={handleSpeak} className="w-[22px] cursor-pointer"
+                                 src="/images/miniUI/Sound.svg" alt="Озвучить" />
                         </div>
                     </div>
 
                     <div className="mt-8">
-                        {isLoading ? <span className="animate-pulse text-white">Переводим...</span> : translated || <span className="text-zinc-400">Введите текст</span>}
+                        {isLoading ? <span className="animate-pulse text-white">Переводим...</span> : translated ||
+                            <span className="text-zinc-400">Введите текст</span>}
                     </div>
                 </div>
             </div>
