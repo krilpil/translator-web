@@ -1,12 +1,21 @@
 import React, { useRef, useState } from 'react';
-import { MobileOnboardAbout, MobileOnboardCreate, MobileOnboardForward, useOnboardStore } from '@/entities/onboard';
+import {
+    MobileOnboardAbout,
+    MobileOnboardCreate,
+    MobileOnboardForward,
+    DesktopOnboardAbout,
+    DesktopOnboardCreate,
+    DesktopOnboardForward,
+    useOnboardStore
+} from '@/entities/onboard';
 
-import { SCarousel, SHeader, SNextButton, SOnboardPage, SSkipButton } from './onboardPage.styles';
+import { SCarousel, SHeader, SLogotype, SNextButton, SOnboardPage, SSkipButton } from './onboardPage.styles';
 import { CarouselRef } from 'antd/es/carousel';
+import { useDevice } from '@/shared/hooks';
 
 export const OnboardPage = () => {
-    const { store, setPassed } = useOnboardStore();
-    // if (store.isPassed) return null;
+    const { setPassed } = useOnboardStore();
+    const { isTablets } = useDevice();
 
     const carouselRef = useRef<CarouselRef | null>(null);
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -26,15 +35,20 @@ export const OnboardPage = () => {
     return (
         <SOnboardPage>
             <SHeader>
-                <img src="/images/SLANGLATE.svg" alt="" style={{ width: '55px', height: '25px' }} />
+                <SLogotype />
                 <SSkipButton onClick={setPassed}>Пропустить</SSkipButton>
             </SHeader>
             <SCarousel ref={carouselRef} afterChange={handleAfterChange}>
-                <MobileOnboardAbout />
-                <MobileOnboardCreate />
-                <MobileOnboardForward />
+                {isTablets && <MobileOnboardAbout />}
+                {isTablets && <MobileOnboardCreate />}
+                {isTablets && <MobileOnboardForward />}
+
+                {!isTablets && <DesktopOnboardAbout onNextSlide={handleNextSlide} />}
+                {!isTablets && <DesktopOnboardCreate onNextSlide={handleNextSlide} />}
+                {!isTablets && <DesktopOnboardForward onNextSlide={handleNextSlide} />}
             </SCarousel>
-            <SNextButton onClick={handleNextSlide} />
+
+            {isTablets && <SNextButton onClick={handleNextSlide} />}
         </SOnboardPage>
     );
 };

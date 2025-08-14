@@ -24,15 +24,10 @@
         "./src/*"
       ]
     },
-    "types": [
-      "src/**/*",
-      "*.d.ts",
-      "vite.config.ts"
-    ]
+    "types": ["vite/client"]
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx"
+    "src"
   ],
   "exclude": [
     "node_modules"

@@ -1,5 +1,5 @@
-import baseApi from '../../../../api/baseApi.ts';
-import { APIGetLanguages, IGetLanguagesRes } from './getLanguages.types.ts';
+import baseApi from '@/api/baseApi';
+import { APIGetLanguages, IGetLanguagesRes } from './getLanguages.types';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 

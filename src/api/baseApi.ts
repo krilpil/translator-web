@@ -28,45 +28,45 @@ const handlerRequestError = async (error: AxiosError | Error): Promise<AxiosErro
 }
 
 const handlerResponseError = async (error: AxiosError | Error): Promise<AxiosError> => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-        if (isRefreshing) {
-            return new Promise((resolve, reject) => {
-                failedRequests.push({ resolve, reject });
-            })
-                .then(() => {
-                    return baseApi(originalRequest);
-                })
-                .catch((err) => {
-                    return Promise.reject(err);
-                });
-        }
-
-        originalRequest._retry = true;
-        isRefreshing = true;
-
-        try {
-            await auth({ initData: '' });
-
-            const token = getCookie('token');
-            if (token) {
-                originalRequest.headers.Authorization = `Bearer ${token}`;
-            }
-
-            failedRequests.forEach((prom) => prom.resolve());
-            failedRequests = [];
-
-            return baseApi(originalRequest);
-        } catch (refreshError) {
-            failedRequests.forEach((prom) => prom.reject(refreshError));
-            failedRequests = [];
-
-            return Promise.reject(refreshError);
-        } finally {
-            isRefreshing = false;
-        }
-    }
+    // const originalRequest = error.config;
+    //
+    // if (error.response?.status === 401 && !originalRequest._retry) {
+    //     if (isRefreshing) {
+    //         return new Promise((resolve, reject) => {
+    //             failedRequests.push({ resolve, reject });
+    //         })
+    //             .then(() => {
+    //                 return baseApi(originalRequest);
+    //             })
+    //             .catch((err) => {
+    //                 return Promise.reject(err);
+    //             });
+    //     }
+    //
+    //     // originalRequest._retry = true;
+    //     // isRefreshing = true;
+    //
+    //     try {
+    //         await auth({ initData: '' });
+    //
+    //         const token = getCookie('token');
+    //         if (token) {
+    //             originalRequest.headers.Authorization = `Bearer ${token}`;
+    //         }
+    //
+    //         failedRequests.forEach((prom) => prom.resolve());
+    //         failedRequests = [];
+    //
+    //         return baseApi(originalRequest);
+    //     } catch (refreshError) {
+    //         failedRequests.forEach((prom) => prom.reject(refreshError));
+    //         failedRequests = [];
+    //
+    //         return Promise.reject(refreshError);
+    //     } finally {
+    //         isRefreshing = false;
+    //     }
+    // }
 
     return Promise.reject(error);
 }

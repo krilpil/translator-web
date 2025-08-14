@@ -15,25 +15,29 @@ const cssMobileOnboard = css`
 `;
 
 export const SMobileOnboardAbout = styled.div`
-    background-image: url('/images/onboard/onboard-1.png');
-    background-position: 50% 60%;
-    background-size: cover;
+    background-image: linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 65%), url('/images/onboard/onboard-1.png');
+    background-position: 65% 0;
+    background-size: 80%;
 
     ${cssMobileOnboard};
 `;
 
 export const SMobileOnboardCreate = styled.div`
-    background-image: url('/images/onboard/onboard-2.png');
-    background-position: 50% 60%;
-    background-size: cover;
+    background-image: linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 65%), url('/images/onboard/onboard-2.png');
+    background-position: 25% 0;
+    background-size: 80%;
 
     ${cssMobileOnboard};
 `;
 
 export const SMobileOnboardForward = styled.div`
-    background-image: linear-gradient(rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 1) 55%), url('/images/onboard/onboard-3.png');
-    background-position: 50% 60%;
-    background-size: cover;
+    background-image: linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 65%), url('/images/onboard/onboard-3.png');
+    background-position: 50% -2rem;
+    background-size: 100%;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.maxMobile}px) {
+        background-size: 80%;
+    }
 
     ${cssMobileOnboard};
 `;
@@ -56,6 +60,7 @@ export const SCommunityButton = styled(Button).attrs({
         height: auto;
         width: max-content;
         padding: 4px 16px 4px 4px;
+        margin-bottom: 40px;
         border-radius: 20px;
         border: none;
         font-weight: 700;

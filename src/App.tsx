@@ -19,6 +19,7 @@ import TranslatePanel from './UI/TranslatePanel';
 import { useUtilsStore } from './services/store/utilsStore';
 import { OnboardPage } from '@/pages/OnboardPage';
 import { useOnboardStore } from '@/entities/onboard';
+import { WithProviders } from '@/app/providers';
 
 function AppWrapper() {
     const location = useLocation();
@@ -112,9 +113,11 @@ function AppWrapper() {
 
 function App() {
     return (
-        <Router>
-            <AppWrapper />
-        </Router>
+        <WithProviders>
+            <Router>
+                <AppWrapper />
+            </Router>
+        </WithProviders>
     );
 }
 
