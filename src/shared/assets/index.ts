@@ -1,0 +1,6 @@
+export * from './icons/IconSelect'
+export * from './icons/IconClose'
+export * from './icons/IconCopy'
+export * from './icons/IconLike'
+export * from './icons/IconSound'
+export * from './icons/IconSwap'

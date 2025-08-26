@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { getCookie } from '../utils/getCookie';
-import { auth } from './auth/auth.api';
 
 const baseApi: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -8,8 +7,8 @@ const baseApi: AxiosInstance = axios.create({
     headers: { 'Content-Type': 'application/json' },
 });
 
-let isRefreshing = false;
-let failedRequests: any[] = [];
+const isRefreshing = false;
+const failedRequests: any[] = [];
 
 const handlerRequest = async (config: InternalAxiosRequestConfig) => {
     const token = getCookie('token');

@@ -1,10 +1,13 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { WithStyledComponents } from '@/app/providers/WithStyledComponents';
+import { WithStyledComponents } from './WithStyledComponents';
+import { WithQueryClient } from './WithRQClientProvider';
 
 export const WithProviders: FC<PropsWithChildren> = ({ children }) => {
     return (
-        <WithStyledComponents>
-            {children}
-        </WithStyledComponents>
+        <WithQueryClient>
+            <WithStyledComponents>
+                {children}
+            </WithStyledComponents>
+        </WithQueryClient>
     );
 };

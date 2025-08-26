@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import FadeIn from '../UI/FadeIn';
 import { defaultApi } from '../api/default/default.api';
-import { useUtilsStore } from '../services/store/utilsStore';
-import { useNavigate } from 'react-router-dom';
-import { useHistoryStore } from '../services/store/useHistoryStore';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslationStore } from '@/entities/translation';
 
 type Translation = {
     id: number;
@@ -14,17 +13,34 @@ type Translation = {
 };
 
 export default function SelectLanguage() {
-    const { setSelectedLanguage, setRightLanguage } = useUtilsStore();
-    const { setWordToTranslate, setTranslated } = useHistoryStore();
-    const [languageList, setLanguageList] = useState<Translation[]>();
-
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
+    const { setStore } = useTranslationStore();
+
+    const [languageList, setLanguageList] = useState<Translation[]>();
+
+
     const changeLang = (param: Translation) => {
-        setWordToTranslate('');
-        setTranslated('');
-        setSelectedLanguage(param.id);
-        setRightLanguage(param);
+        const lang = searchParams.get('lang');
+
+        if (lang === 'src') {
+            setStore({
+                srcLanguageId: param.id,
+                srcLanguage: param.name,
+                srcValue: '',
+                dstValue: ''
+            });
+        }
+
+        if (lang === 'dst') {
+            setStore({
+                dstLanguageId: param.id,
+                dstLanguage: param.name,
+                dstValue: '',
+                srcValue: ''
+            });
+        }
         navigate('/');
     };
 

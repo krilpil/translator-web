@@ -1,0 +1,10 @@
+import React from 'react';
+
+export const IconClose = () => {
+    return (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.75 0.75L0.75 16.75" stroke="#787878" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M0.75 0.75L16.75 16.75" stroke="#787878" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+    );
+};
