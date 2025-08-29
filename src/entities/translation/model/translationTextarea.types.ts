@@ -15,5 +15,5 @@ export interface TranslationOutputTextareaProps {
 }
 
 export interface STextareaProps {
-    glow: boolean;
+    largeText: boolean;
 }

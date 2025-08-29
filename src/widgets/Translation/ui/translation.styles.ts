@@ -16,8 +16,7 @@ export const STextareaWrapper = styled.div`
 
     @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}px) {
         grid-template-columns: 1fr;
-        padding: 0 8px;
-        gap: 0;
+        padding: 0 12px;
     }
 `
 

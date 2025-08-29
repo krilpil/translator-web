@@ -1,17 +1,23 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Button, Input } from 'antd';
+import { STextareaProps } from '@/entities/translation';
 
 export const STranslationOutputTextarea = styled.div`
-`
+`;
 
 export const STranslationInput = styled.div`
-    padding: 24px 8px;
+    padding: 24px 0;
+    
+    @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}px) {
+        padding: 0 24px;
+    }
 `;
 
 export const SToolbar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 16px;
 `;
 
 export const SToolbarGroup = styled.div`
@@ -38,12 +44,13 @@ export const SLanguage = styled.span`
 
 export const STranslationOutput = styled.div`
     padding: 24px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: saturate(500%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: radial-gradient(95% 300% at 50% 50%, rgba(0, 0, 0, 0.6) 30%, rgba(255, 255, 255, 0.05) 70%);
+    backdrop-filter: saturate(300%);
+    outline: 2px solid rgba(255, 255, 255, 0.1); 
+    outline-offset: 1px;     
     border-radius: 40px;
     box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1),
-    inset 0 4px 20px rgba(0, 0, 0, 0.5);
+    inset 0 4px 20px rgba(255, 255, 255, 0.1);
 
     &::after {
         content: '';
@@ -65,32 +72,45 @@ export const STranslationOutput = styled.div`
 
 export const STextarea = styled(Input.TextArea).attrs({
     variant: 'borderless'
-})`
-    color: #ffffff;
-    font-size: 24px;
-    padding: 16px 11px 0 0;
+})<STextareaProps>`
+    &.ant-input {
+        color: #ffffff;
+        font-size: 24px;
+        padding: 0 11px 0 0;
+        height: 260px !important;
+        max-height: 260px !important;
+        min-height: 260px !important;
 
-    &.ant-input-disabled {
-        cursor: default;
-        color: inherit;
-    }
+        ${({ largeText }) => largeText && css`
+            font-size: 36px;
+        `};
 
-    &::placeholder {
-        color: #787878;
+        &.ant-input-disabled {
+            cursor: default;
+            color: inherit;
+        }
+
+        &::placeholder {
+            color: #787878;
+        }
     }
 `;
 
-export const SGlowTextarea = styled.h1`
+export const SGlowTextarea = styled.span<STextareaProps>`
     position: absolute;
-    margin: 68px 11px 78px -16px;
-    padding: 0 40px;
+    margin: 52px 11px 78px -16px;
+    padding: 16px 40px;
     color: #517FF4;
     font-size: 24px;
     line-height: 1.57;
-    filter: blur(35px);
+    filter: blur(40px);
     background-color: #517FF4;
-    max-height: 275px;
+    max-height: 235px;
     overflow: hidden;
+
+    ${({ largeText }) => largeText && css`
+        font-size: 36px;
+    `};
 
     @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}px) {
         max-height: 200px;

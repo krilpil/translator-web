@@ -8,7 +8,7 @@ import { useState } from 'react';
 const headerAnimation = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    transition: { duration: 0.6, ease: 'easeOut' },
+    transition: { duration: 0.6, ease: 'easeOut' }
 };
 
 export default function Header() {
@@ -28,20 +28,23 @@ export default function Header() {
     };
 
     return (
-        <header className="flex w-full justify-between" style={isMobile ? { padding: '20px' } : {}}>
+        <header className="flex w-full justify-between" style={isMobile ? { padding: '16px 36px 0' } : {}}>
             <div className="w-full">
-                <motion.nav aria-label="Global" className="flex items-center justify-between py-5" {...headerAnimation}>
+                <motion.nav aria-label="Global" className="flex items-center justify-between py-5"
+                            {...headerAnimation}>
                     <div className="flex-1">
                         <FadeIn>
                             <Link className="!font-bold" to="/">
-                                <img src="/images/SLANGLATE.svg" alt="" className="h-[25px] w-[56px] md:h-[35px] md:w-[75px]" />
+                                <img src="/images/SLANGLATE.svg" alt=""
+                                     className="h-[25px] w-[56px] md:h-[35px] md:w-[75px]" />
                             </Link>
                         </FadeIn>
                     </div>
 
                     <div className="flex gap-x-4">
                         <FadeIn>
-                            <Link to="/HistoryTranslate" onClick={(e) => handleClick(e, 'history', '/HistoryTranslate')}>
+                            <Link to="/HistoryTranslate"
+                                  onClick={(e) => handleClick(e, 'history', '/HistoryTranslate')}>
                                 <img className="cursor-pointer" src="/images/History.svg" alt="" />
                             </Link>
                         </FadeIn>

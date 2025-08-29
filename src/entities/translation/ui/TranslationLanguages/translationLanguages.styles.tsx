@@ -26,6 +26,10 @@ export const SLanguageButton = styled(Button)`
         padding: 12px 44px;
         height: auto;
 
+        @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}px) {
+            padding: 16px;
+        }
+
         &.ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
             color: #FFFFFF;
             background-color: #3a3a3a;

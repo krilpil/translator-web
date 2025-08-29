@@ -21,6 +21,10 @@ export const TranslationInputTextarea: FC<TranslationInputTextareaProps> = ({ la
     const { isTablets } = useDevice();
     const [textareaValue, setTextareaValue] = useState(value);
 
+    const isDisabled = !value.length;
+    const autoSize = isTablets ? mobileAutoSize : desktopAutoSize;
+    const isLargeText = isDisabled ? false : value.length <= 20;
+
     const debounceOnChange = useMemo(
         () =>
             debounce((translateSrc: string) => {
@@ -40,16 +44,19 @@ export const TranslationInputTextarea: FC<TranslationInputTextareaProps> = ({ la
         }
     }, [value]);
 
-    const autoSize = isTablets ? mobileAutoSize : desktopAutoSize;
-
     return (
         <STranslationInput>
             <SToolbar>
                 <SLanguage><IconSelect />{language}</SLanguage>
                 <SToolbarButton onClick={onClear} icon={iconClose} />
             </SToolbar>
-            <STextarea value={textareaValue} onChange={handleChange} autoSize={autoSize}
-                       placeholder={'Введите текст'} />
+            <STextarea
+                value={textareaValue}
+                onChange={handleChange}
+                autoSize={autoSize}
+                placeholder={'Введите текст'}
+                largeText={isLargeText}
+            />
         </STranslationInput>
     );
 };

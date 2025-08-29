@@ -25,14 +25,14 @@ export const TranslationOutputTextarea: FC<TranslationOutputTextareaProps> = ({
     const { isTablets } = useDevice();
 
     const isDisabled = !value.length;
-    const isGlow = !!value.length;
+    const isLargeText = isDisabled ? false : value.length <= 20;
     const textareaValue = loading ? 'Переводим...' : value;
 
     const autoSize = isTablets ? mobileAutoSize : desktopAutoSize;
 
     return (
         <STranslationOutputTextarea>
-            {!!textareaValue && <SGlowTextarea>{textareaValue}</SGlowTextarea>}
+            {!!textareaValue && <SGlowTextarea largeText={isLargeText}>{textareaValue}</SGlowTextarea>}
 
             <STranslationOutput>
                 <SToolbar>
@@ -45,6 +45,7 @@ export const TranslationOutputTextarea: FC<TranslationOutputTextareaProps> = ({
                 </SToolbar>
                 <STextarea
                     disabled={isDisabled}
+                    largeText={isLargeText}
                     value={textareaValue}
                     autoSize={autoSize}
                     placeholder={'Перевод'}
