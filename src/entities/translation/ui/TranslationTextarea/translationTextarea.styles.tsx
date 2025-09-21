@@ -39,18 +39,24 @@ export const SLanguage = styled.span`
     gap: 8px;
     align-items: center;
     font-size: 16px;
-    color: #fffffff;
+    color: #ffffff;
+    cursor: pointer;
 `;
 
 export const STranslationOutput = styled.div`
     padding: 24px;
     background: radial-gradient(95% 300% at 50% 50%, rgba(0, 0, 0, 0.6) 30%, rgba(255, 255, 255, 0.05) 70%);
     backdrop-filter: saturate(300%);
-    outline: 2px solid rgba(255, 255, 255, 0.1); 
-    outline-offset: 1px;     
+    outline: 2px solid rgba(255, 255, 255, 0.1);
+    outline-offset: 1px;
     border-radius: 40px;
     box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1),
     inset 0 4px 20px rgba(255, 255, 255, 0.1);
+    
+    -webkit-backdrop-filter: saturate(300%);  
+    -webkit-border-radius: 40px; 
+    -webkit-box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1),
+    inset 0 4px 20px rgba(255, 255, 255, 0.1); 
 
     &::after {
         content: '';
@@ -67,6 +73,10 @@ export const STranslationOutput = styled.div`
         opacity: 0.4;
         z-index: -1;
         filter: blur(1px) drop-shadow(10px 4px 6px black) brightness(50%);
+        
+        -webkit-backdrop-filter: blur(1px);
+        -webkit-box-shadow: inset -10px -8px 0 -11px rgba(255, 255, 255, 0.7),
+        inset 0 -9px 0 -8px rgba(255, 255, 255, 0.7);
     }
 `;
 
@@ -108,6 +118,12 @@ export const SGlowTextarea = styled.span<STextareaProps>`
     max-height: 235px;
     overflow: hidden;
 
+    /* WebKit-specific styles */
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -webkit-transform: translate3d(0, 0, 0); /* For hardware acceleration */
+    -webkit-backface-visibility: hidden; /* To prevent flickering effects */
+
     ${({ largeText }) => largeText && css`
         font-size: 36px;
     `};
@@ -117,4 +133,5 @@ export const SGlowTextarea = styled.span<STextareaProps>`
         margin: 68px 0;
         padding: 0 8px 0 64px;
     }
+
 `;

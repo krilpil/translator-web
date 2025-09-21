@@ -17,13 +17,12 @@ import { desktopAutoSize, mobileAutoSize } from '../../lib/textareaAutoSize';
 const iconClose: JSX.Element = <IconClose />;
 
 
-export const TranslationInputTextarea: FC<TranslationInputTextareaProps> = ({ language, value, onChange, onClear }) => {
+export const TranslationInputTextarea: FC<TranslationInputTextareaProps> = ({ language, value, onChangeSrcLanguage, onChange, onClear }) => {
     const { isTablets } = useDevice();
     const [textareaValue, setTextareaValue] = useState(value);
 
-    const isDisabled = !value.length;
     const autoSize = isTablets ? mobileAutoSize : desktopAutoSize;
-    const isLargeText = isDisabled ? false : value.length <= 20;
+    const isLargeText = value.length <= 20;
 
     const debounceOnChange = useMemo(
         () =>
@@ -47,7 +46,7 @@ export const TranslationInputTextarea: FC<TranslationInputTextareaProps> = ({ la
     return (
         <STranslationInput>
             <SToolbar>
-                <SLanguage><IconSelect />{language}</SLanguage>
+                <SLanguage onClick={onChangeSrcLanguage}><IconSelect />{language}</SLanguage>
                 <SToolbarButton onClick={onClear} icon={iconClose} />
             </SToolbar>
             <STextarea

@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, useLocation, matchPath } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation, matchPath, Outlet } from 'react-router-dom';
 import Home from './pages/home';
 import Library from './pages/Library';
 import Masterskaya from './pages/Masterskaya';
@@ -10,21 +10,20 @@ import HistoryTranslate from './pages/HistoryTranslate';
 import MainHeader from './components/MenuBar/MainHeader';
 import SelectLanguage from './pages/SelectLanguage';
 import { useHistoryStore } from './services/store/useHistoryStore';
-import { useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { auth } from './api/auth/auth.api';
 import StandartInfo from './components/LanguageInfo/StandartInfo';
 import './App.css';
-import AboutPage from './pages/AboutPage';
+import { AboutPage } from './pages/AboutPage';
 import TranslatePanel from './UI/TranslatePanel';
 import { useUtilsStore } from './services/store/utilsStore';
 import { OnboardPage } from '@/pages/OnboardPage';
 import { useOnboardStore } from '@/entities/onboard';
 import { WithProviders } from '@/app/providers';
 
-function AppWrapper() {
+const Layout = () => {
     const location = useLocation();
     const { sidebarOpen } = useUtilsStore();
-    const { store } = useOnboardStore();
     const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 768);
 
     const isHomePage = location.pathname === '/';
@@ -79,8 +78,6 @@ function AppWrapper() {
 
     const shouldApplyPadding = !isHomePage || (isHomePage && isNarrowScreen);
 
-    if (!store.isPassed) return <OnboardPage />;
-
     return (
         <>
             {!hideHeader && (isHomePage ? <Header /> : <MainHeader />)}
@@ -94,19 +91,33 @@ function AppWrapper() {
                     transform: showToolbar && sidebarOpen ? 'translateX(-10rem)' : 'translateX(0)'
                 }}
             >
-                <Routes>
+                <Outlet />
+            </div>
+
+            <Footer />
+        </>
+    );
+};
+
+function AppWrapper() {
+    const { store } = useOnboardStore();
+    if (!store.isPassed) return <OnboardPage />;
+
+    return (
+        <>
+            <Routes>
+                <Route element={<Layout/>}>
                     <Route path="/" element={<Home />} />
                     <Route path="/Library" element={<Library />} />
                     <Route path="/StandartInfo/:itemId" element={<StandartInfo />} />
                     <Route path="/Masterskaya" element={<Masterskaya />} />
-                    <Route path="/AboutPage" element={<AboutPage />} />
                     <Route path="/SavedTranslate" element={<SavedTranslate />} />
                     <Route path="/HistoryTranslate" element={<HistoryTranslate />} />
                     <Route path="/SelectLanguage" element={<SelectLanguage />} />
-                </Routes>
-            </div>
+                </Route>
 
-            <Footer />
+                <Route path="/AboutPage" element={<AboutPage />} />
+            </Routes>
         </>
     );
 }

@@ -84,6 +84,7 @@ export const Translation = () => {
                 <TranslationInputTextarea
                     language={store.srcLanguage}
                     value={store.srcValue}
+                    onChangeSrcLanguage={handleChangeSrcLanguage}
                     onChange={handleChangeSrcValue}
                     onClear={handleClear}
                 />
@@ -91,19 +92,21 @@ export const Translation = () => {
                     language={store.dstLanguage}
                     value={store.dstValue}
                     loading={isPending}
+                    onChangeDstLanguage={handleChangeDstLanguage}
+                    onSwap={handleSwap}
                     onCopy={handleCopy}
                     onLike={handleLike}
                     onSound={handleSound}
                 />
             </STextareaWrapper>
 
-            <TranslationLanguages
-                srcLanguage={store.srcLanguage}
-                dstLanguage={store.dstLanguage}
-                onSwap={handleSwap}
-                onChangeDstLanguage={handleChangeDstLanguage}
-                onChangeSrcLanguage={handleChangeSrcLanguage}
-            />
+            {/*<TranslationLanguages*/}
+            {/*    srcLanguage={store.srcLanguage}*/}
+            {/*    dstLanguage={store.dstLanguage}*/}
+            {/*    onSwap={handleSwap}*/}
+            {/*    onChangeDstLanguage={handleChangeDstLanguage}*/}
+            {/*    onChangeSrcLanguage={handleChangeSrcLanguage}*/}
+            {/*/>*/}
         </STranslations>
     );
 };
