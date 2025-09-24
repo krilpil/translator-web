@@ -10,16 +10,17 @@ import HistoryTranslate from './pages/HistoryTranslate';
 import MainHeader from './components/MenuBar/MainHeader';
 import SelectLanguage from './pages/SelectLanguage';
 import { useHistoryStore } from './services/store/useHistoryStore';
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { auth } from './api/auth/auth.api';
 import StandartInfo from './components/LanguageInfo/StandartInfo';
-import './App.css';
 import { AboutPage } from './pages/AboutPage';
 import TranslatePanel from './UI/TranslatePanel';
 import { useUtilsStore } from './services/store/utilsStore';
 import { OnboardPage } from '@/pages/OnboardPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 import { useOnboardStore } from '@/entities/onboard';
 import { WithProviders } from '@/app/providers';
+import './App.css';
 
 const Layout = () => {
     const location = useLocation();
@@ -114,6 +115,7 @@ function AppWrapper() {
                     <Route path="/SavedTranslate" element={<SavedTranslate />} />
                     <Route path="/HistoryTranslate" element={<HistoryTranslate />} />
                     <Route path="/SelectLanguage" element={<SelectLanguage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Route>
 
                 <Route path="/AboutPage" element={<AboutPage />} />

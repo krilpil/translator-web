@@ -23,7 +23,7 @@ export const SMain = styled.main`
 
 export const SHeader = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 3fr 1fr;
     justify-content: space-between;
     align-items: center;
     justify-items: center;
@@ -57,7 +57,7 @@ export const SLogotype = styled.img.attrs({
 export const STitle = styled.span`
     font-size: 26px;
     font-weight: 700;
-`
+`;
 
 const iconClose: JSX.Element = <IconClose stroke={'white'} />;
 
@@ -75,29 +75,39 @@ export const SCloseButton = styled(Button).attrs({
 `;
 
 export const SAbout = styled.div`
-    display: grid;
+    display: flex;
     align-items: center;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 48px;
-`
+    justify-content: space-between;
+    gap: 48px;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}px) {
+        flex-direction: column;
+        align-items: start;
+    }
+`;
 
 export const SAboutTitle = styled.h1`
     font-size: 58px;
     line-height: normal;
     color: white;
-    
+
     & b {
         font-size: 71px;
     }
-`
+`;
 
 export const SAboutInfo = styled.div`
     display: flex;
     gap: 16px;
+    width: 100%;
     flex-direction: column;
     align-items: end;
     justify-content: space-between;
-`
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}px) {
+        align-items: start;
+    }
+`;
 
 export const STags = styled.div`
     display: flex;
@@ -113,14 +123,21 @@ export const STags = styled.div`
         border-radius: 16px;
         background: linear-gradient(#3349ee, #3349ee) padding-box,
         linear-gradient(135deg, #6372e8, #3349ee, #3349ee, #3349ee, #3349ee, #6372e8, #3349ee, #6372e8) border-box;
+
+        @media (max-width: ${({ theme }) => theme.breakpoints.maxLaptops}px) {
+            font-size: 16px;
+        }
     }
-`
+`;
 
 export const SUsers = styled.div`
     display: flex;
-    //align-items: center;
     gap: 16px;
-`
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.maxLaptops}px) {
+        flex-direction: row-reverse;
+    }
+`;
 
 export const SUsersCount = styled.div`
     display: flex;
@@ -128,20 +145,29 @@ export const SUsersCount = styled.div`
     align-items: end;
     font-weight: 300;
     padding: 8px 0;
-    
+
     & strong {
         line-height: 0.8;
         font-size: 28px;
         font-weight: bold;
     }
-`
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}px) {
+        font-size: 18px;
+        align-items: start;
+
+        & strong {
+            font-size: 32px;
+        }
+    }
+`;
 
 export const SAvatars = styled.img.attrs({
     src: '/images/avatars.png',
     alt: 'avatars'
 })`
     height: 58px;
-`
+`;
 
 export const SDescription = styled.div`
     font-size: 50px;
@@ -151,9 +177,9 @@ export const SDescription = styled.div`
     border-radius: 30px;
     background: linear-gradient(#3349ee, #3349ee) padding-box,
     linear-gradient(135deg, #6372e8, #3349ee, #6372e8, #3349ee, #6372e8) border-box;
-    
+
     & strong {
         color: black;
         font-weight: normal;
     }
-`
+`;

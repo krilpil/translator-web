@@ -1,21 +1,41 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import FadeIn from '../../UI/FadeIn';
 import './Marquee.css';
+import { useTranslationStore } from '@/entities/translation';
+import { ITranslationStore } from '@/entities/translation/model/translationStore.types';
+
+interface ILanguagesInfo {
+    imgName: string,
+    label: string
+    srcLanguageId: number,
+    srcLanguage: string,
+}
 
 export default function StandartInfo() {
-    const { itemId } = useParams();
+    const { setStore } = useTranslationStore();
 
-    const icons = [
-        { imgName: 'Skuf', label: 'Русский скуф' },
-        { imgName: 'Elite', label: 'Русский сударь' },
-        { imgName: 'Gopnik', label: 'Русский Гопник' },
-        { imgName: 'Zumer1', label: 'Русский Зумер' },
-        { imgName: 'Zumer', label: 'HOOD' },
-        { imgName: 'Bot', label: 'custom' },
-        { imgName: 'Info', label: 'словарь' }
+    const { itemId } = useParams();
+    const navigate = useNavigate();
+
+    const languagesInfo: ILanguagesInfo[] = [
+        { imgName: 'Skuf', label: 'Русский скуф', srcLanguageId: 5, srcLanguage: 'russian skuf' },
+        { imgName: 'Elite', label: 'Русский сударь', srcLanguageId: 106, srcLanguage: 'russian sudar' },
+        { imgName: 'Gopnik', label: 'Русский Гопник', srcLanguageId: 105, srcLanguage: 'russian gopnik' },
+        { imgName: 'Zumer1', label: 'Русский Зумер', srcLanguageId: 107, srcLanguage: 'russian zoomer' },
+        { imgName: 'Zumer', label: 'HOOD', srcLanguageId: 108, srcLanguage: 'hood' },
+        { imgName: 'Bot', label: 'custom', srcLanguageId: 1, srcLanguage: 'russian' },
+        { imgName: 'Info', label: 'словарь', srcLanguageId: 1, srcLanguage: 'russian' }
     ];
 
-    const currentLang = icons.find((item) => item.imgName === itemId);
+    const currentLang = languagesInfo.find((item) => item.imgName === itemId) || languagesInfo[0];
+
+    const handleButtonTry = ({
+                                 srcLanguageId,
+                                 srcLanguage
+                             }: Pick<ITranslationStore, 'srcLanguageId' | 'srcLanguage'>) => {
+        setStore({ srcLanguageId, srcLanguage, srcValue: '', dstValue: '' });
+        navigate(`/`);
+    };
 
     return (
         <div className="-mt-20">
@@ -115,7 +135,10 @@ export default function StandartInfo() {
                                 </div>
                             </div>
 
-                            <div className="relative h-12 w-full rounded-[68.75px] bg-white sm:w-80">
+                            <div onClick={() => handleButtonTry({
+                                srcLanguageId: currentLang.srcLanguageId,
+                                srcLanguage: currentLang.srcLanguage
+                            })} className="relative cursor-pointer h-12 w-full rounded-[68.75px] bg-white sm:w-80">
                                 <div
                                     className="flex h-full w-[calc(100%-58px)] items-center justify-between rounded-[68.75px] border border-white bg-black px-2 sm:w-64">
                                     <p className="mt-[-3px] ml-2 text-base font-normal text-white sm:text-xl">Попробовать</p>

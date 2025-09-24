@@ -4,12 +4,16 @@ import { defaultApi } from '../api/default/default.api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslationStore } from '@/entities/translation';
 
-type Translation = {
+type LanguageType = {
     id: number;
     name: string;
     description: string;
     languageCode: string;
     isByUser: boolean;
+}
+
+interface Translation extends LanguageType {
+    custom?: LanguageType[];
 };
 
 export default function SelectLanguage() {
@@ -68,7 +72,7 @@ export default function SelectLanguage() {
                 <div className="my-3 h-[1px] self-center bg-[#787878]" />
                 <p className="mt-5 mb-3 text-xl font-semibold">Все языки</p>
 
-                <div className="ml-5 flex flex-col gap-3">
+                <div className="ml-5 flex flex-col">
                     {languageList?.map((lang, index) => (
                         <div key={index}>
                             <p
@@ -79,15 +83,17 @@ export default function SelectLanguage() {
                             >
                                 {lang.name}
                             </p>
-                            {/* {lang.children && (
-                                <div className="ml-4 text-xl">
-                                    {lang.children.map((child, i) => (
-                                        <div className="mb-3 cursor-pointer" key={i}>
-                                            {child.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )} */}
+
+                            {lang.custom?.map((custom) => (
+                                <p
+                                    onClick={() => {
+                                        changeLang(custom);
+                                    }}
+                                    className="mb-3 cursor-pointer text-xl font-medium"
+                                >
+                                    {custom.name}
+                                </p>
+                            ))}
                         </div>
                     ))}
                 </div>
